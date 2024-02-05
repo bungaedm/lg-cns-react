@@ -1,13 +1,19 @@
 import './App.css';
+import {useState} from 'react';
 
 function Counter({title, initValue}){
+  const valueState = useState(initValue);
+  const value = valueState[0];
+  const setValue = valueState[1];
+  console.log('valueState', valueState);
+
   function up(){
-    alert('up');
+    setValue(value+1);
   }
 
   return <div>
     <h1>{title}</h1>
-    <button onClick={up}>+</button> {initValue}
+    <button onClick={up}>+</button> {value}
   </div>
 }
 
