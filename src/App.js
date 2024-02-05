@@ -1,10 +1,26 @@
 import './App.css';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 function Counter({title, initValue}){
   const [value, setValue] = useState(initValue);
   const [step, setStep] = useState(1);
   const [history, setHistory] = useState([]);
+
+  useEffect(()=>{
+    fetch('http://localhost:9999/counter')
+    .then(resp=>resp.json())
+    .then(result=>{
+      setValue(result.value);
+    })
+  },[]);
+
+  const up = () => {
+    const newValue = value+step;
+    const newHistory = [...history];
+    setValue(newValue);
+    newHistory.push(newValue);
+    setHistory(newHistory);
+  };
 
   return (
     <div>
@@ -12,11 +28,12 @@ function Counter({title, initValue}){
       <input type="number" value={step} onChange={(evt)=>{
         setStep(Number(evt.target.value));
       }}/>
-      <button onClick={() => {
-        setValue(value+step);
-        setHistory([...history, value+step]);
-      }}>+</button> {value}
-      <ol>{history.map(item=><li>{item}</li>)}</ol>
+      <button onClick={up}>+</button> {value}
+      <ol>
+        {history.map((item,index)=>{
+          return <li key={index}>{item}</li>
+        })}
+      </ol>
     </div>
   )
 }
@@ -25,7 +42,6 @@ function App() {
   return (
     <div>
       <Counter title="카운터" initValue={2}/>
-      {/* <Counter title="불면증 카운터" initValue={4}/> */}
     </div>
   );
 }
