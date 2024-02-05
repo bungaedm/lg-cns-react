@@ -7,14 +7,12 @@ function Counter({title, initValue}){
   const setValue = valueState[1];
   console.log('valueState', valueState);
 
-  function up(){
-    setValue(value+1);
-  }
-
-  return <div>
-    <h1>{title}</h1>
-    <button onClick={up}>+</button> {value}
-  </div>
+  return (
+    <div>
+      <h1>{title}</h1>
+      <button onClick={()=>setValue(value+1)}>+</button> {value}
+    </div>
+  )
 }
 
 function App() {
