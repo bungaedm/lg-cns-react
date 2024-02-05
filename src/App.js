@@ -2,15 +2,21 @@ import './App.css';
 import {useState} from 'react';
 
 function Counter({title, initValue}){
-  const valueState = useState(initValue);
-  const value = valueState[0];
-  const setValue = valueState[1];
-  console.log('valueState', valueState);
+  const [value, setValue] = useState(initValue);
+  const [step, setStep] = useState(1);
+  const [history, setHistory] = useState([]);
 
   return (
     <div>
       <h1>{title}</h1>
-      <button onClick={()=>setValue(value+1)}>+</button> {value}
+      <input type="number" value={step} onChange={(evt)=>{
+        setStep(Number(evt.target.value));
+      }}/>
+      <button onClick={() => {
+        setValue(value+step);
+        setHistory([...history, value+step]);
+      }}>+</button> {value}
+      <ol>{history.map(item=><li>{item}</li>)}</ol>
     </div>
   )
 }
@@ -19,7 +25,7 @@ function App() {
   return (
     <div>
       <Counter title="카운터" initValue={2}/>
-      <Counter title="불면증 카운터" initValue={4}/>
+      {/* <Counter title="불면증 카운터" initValue={4}/> */}
     </div>
   );
 }
