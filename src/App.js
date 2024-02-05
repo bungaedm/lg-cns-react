@@ -1,9 +1,13 @@
 import './App.css';
 
 function Counter({title, initValue}){
+  function up(){
+    alert('up');
+  }
+
   return <div>
     <h1>{title}</h1>
-    <button>+</button> {initValue}
+    <button onClick={up}>+</button> {initValue}
   </div>
 }
 
