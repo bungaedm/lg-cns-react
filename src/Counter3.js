@@ -4,16 +4,24 @@ function Counter3({title, initValue}){
     const [value, setValue] = useState(initValue);
     const [step, setStep] = useState(10);
     
+    // useEffect(()=>{
+    //     fetch('http://localhost:9999/counter')
+    //     .then(res=>res.json())
+    //     .then(data=>{
+    //         setValue(data.value);
+    //     })
+    // },[])
+
     useEffect(()=>{
-        fetch('http://localhost:9999/counter')
-        .then(res=>res.json())
-        .then(data=>{
+        (async () => {
+            const res = await fetch('http://localhost:9999/counter')
+            const data = await res.json();    
             setValue(data.value);
-        });
+        })();
     },[])
 
     function up(){
-        setValue(value+1);
+        setValue(value+step);
     }
     function stepChange(e){
         setStep(Number(e.target.value));
